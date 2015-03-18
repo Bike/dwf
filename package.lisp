@@ -2,6 +2,10 @@
   (defpackage "DWF"
     (:use "CL" "CFFI")
     (:export "DWF-ERROR")
+    ;; devices.lisp
+    (:export "DEVICE" "DEVICE-TYPE" "DEVICE-VERSION" "DEVICE-SERIAL"
+	     "DEVICE-HANDLE" "DEVICE-FROM-ID" "DEVICES"
+	     "DEVICE-CONNECTED-P" "DEVICE-CONNECT" "DEVICE-DISCONNECT")
     ;; the C API (DWF-C for raw versions, so to speak)
     #1=(:export "GET-LAST-ERROR" "GET-LAST-ERROR-MSG" "GET-VERSION"
 		"ENUM" "ENUM-DEVICE-TYPE" "ENUM-DEVICE-IS-OPENED"

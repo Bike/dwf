@@ -6,4 +6,5 @@
   :depends-on (#:cffi)
   :components ((:file "package")
 	       (:file "base" :depends-on ("package"))
-	       (:file "base-aout" :depends-on ("base" "package"))))
+	       (:file "base-aout" :depends-on ("base" "package"))
+	       (:file "devices" :depends-on ("base" "package"))))
