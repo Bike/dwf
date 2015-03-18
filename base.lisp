@@ -144,10 +144,20 @@
 
 ;; ENUMERATION, DEVICE MANAGEMENT
 (defdwf enum (filter enumfilter) (count :int :out))
-(defdwf enum-device-type
-  (device :int)
-  (device-id device-id :out)
-  (device-version device-version :out))
+(defcfun (dwf-c:enum-device-type "FDwfEnumDeviceType") bool
+  (device :int) (device-id (:pointer device-id))
+  (device-version (:pointer device-version)))
+(defun enum-device-type (device)
+  (with-foreign-objects ((device-id 'device-id)
+			 (device-version 'device-version))
+    (unless (dwf-c:enum-device-type device device-id device-version)
+      (error-dwf 'enum-device-type))
+    (let ((id (mem-ref device-id 'device-id))
+	  (v (mem-ref device-version 'device-version)))
+      ;; kludge around the conflicting enum values in device-version
+      (values id (if (and (eq id :explorer) (eq v :discovery-b))
+		     :explorer-c
+		     v)))))
 (defdwf enum-device-is-opened (device :int) (used-p bool :out))
 (defcfun (dwf-c:enum-user-name "FDwfEnumUserName") bool
   (device :int) (username (:pointer :char)))
