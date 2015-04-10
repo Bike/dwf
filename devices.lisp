@@ -55,3 +55,12 @@
 
 (defun devices ()
   (loop for i below (enum :all) collecting (device-from-id i)))
+
+(defvar *device*)
+
+(defmacro with-device (device &body body)
+  (let ((dvar (gensym "DEVICE")))
+    `(let* ((,dvar ,device)
+	    (*device* ,dvar))
+       (unwind-protect (progn (device-connect ,dvar) ,@body)
+	 (device-disconnect ,dvar)))))
