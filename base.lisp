@@ -48,11 +48,16 @@
   :external-2
   :external-3
   :external-4)
-(defctype state dbyte)
-(defdwffield (acquisition-mode) (acquisition-mode-set)
-  :single :scan-shift :scan-screen :record)
-(defdwffield (filter) (filter-set)
-  :decimate :average :min-max)
+(defcenum (state dbyte)
+  (:ready 0)
+  (:config 4)
+  (:prefill 5)
+  (:armed 1)
+  (:wait 7)
+  ;; I don't think this is a real state, but it's in the header.
+  ;; (:triggered 3)
+  (:running 3)
+  (:done 2))
 ;; the fact the set is also a byte is probably a bug on the API's part
 (defdwffield (analog-io dbyte) (analog-io-set dbyte)
   (:enable 1) :voltage :current :power :temperature)
