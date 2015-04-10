@@ -8,4 +8,5 @@
 	       (:file "base" :depends-on ("package"))
 	       (:file "base-aout" :depends-on ("base" "package"))
 	       (:file "base-ain" :depends-on ("base" "package"))
+	       (:file "awg" :depends-on ("base-aout" "devices" "package"))
 	       (:file "devices" :depends-on ("base" "package"))))
